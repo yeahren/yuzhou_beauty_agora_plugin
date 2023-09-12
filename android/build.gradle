@@ -88,8 +88,8 @@ dependencies {
     implementation "com.google.code.gson:gson:2.2.4"
     implementation "com.getkeepsafe.relinker:relinker:1.4.4"
 
-    implementation project(path: ':camera')
-    implementation project(path: ':extension')
+    api project(path: ':camera')
+    api project(path: ':extension')
 
     implementation "io.github.crow-misia.libyuv:libyuv-android:0.28.0"
 }

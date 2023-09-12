@@ -4,11 +4,12 @@ packages:
   agora_rtc_engine:
     dependency: transitive
     description:
-      name: agora_rtc_engine
-      sha256: f4ed954e859d7de0d036e17f2657f748813d1184d71de6d14cbabe43d49cfb6b
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "6.2.0"
+      path: "."
+      ref: "7179298f34b03ac636e4bef9b92e02a4f2cfe789"
+      resolved-ref: "7179298f34b03ac636e4bef9b92e02a4f2cfe789"
+      url: "https://github.com/AgoraIO-Extensions/Agora-Flutter-SDK.git"
+    source: git
+    version: "6.2.1"
   async:
     dependency: transitive
     description:
@@ -187,10 +188,26 @@ packages:
     dependency: transitive
     description:
       name: permission_handler
-      sha256: "4356882e9abf51aa0d56e8fb886e0d6162719f2310dd71f0b8fa7f34908b128d"
+      sha256: bc56bfe9d3f44c3c612d8d393bd9b174eb796d706759f9b495ac254e4294baa5
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "8.3.0"
+    version: "10.4.5"
+  permission_handler_android:
+    dependency: transitive
+    description:
+      name: permission_handler_android
+      sha256: "59c6322171c29df93a22d150ad95f3aa19ed86542eaec409ab2691b8f35f9a47"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "10.3.6"
+  permission_handler_apple:
+    dependency: transitive
+    description:
+      name: permission_handler_apple
+      sha256: "99e220bce3f8877c78e4ace901082fb29fa1b4ebde529ad0932d8d664b34f3f5"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "9.1.4"
   permission_handler_platform_interface:
     dependency: transitive
     description:
@@ -199,6 +216,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.11.5"
+  permission_handler_windows:
+    dependency: transitive
+    description:
+      name: permission_handler_windows
+      sha256: cc074aace208760f1eee6aa4fae766b45d947df85bc831cde77009cdb4720098
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.1.3"
   platform:
     dependency: transitive
     description:

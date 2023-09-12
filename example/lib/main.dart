@@ -122,6 +122,7 @@ class _MyAppState extends State<MyApp> {
   _deinitEngine() async {
     await engine.release();
   }
+  double _sliderValue = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -149,10 +150,10 @@ class _MyAppState extends State<MyApp> {
                         onPressed: !turnOnBeauty
                             ? () async {
                           if(Platform.isAndroid) {
-                            license = "";
+                            license = "WnZXdTlVczZJZUNFTUlHZE1BMEdDU3FHU0liM0RRRUJBUVVBQTRHTEFEQ0JuOGZod0tCZ1FDdHFTempXYUVBU1ZMY3Y1KzN6SVpLdk9nci9LNC9tCkJ5bnpEbTRsMDRFeWR0cnREelhweVdlSlNlczdvTDJkOXE1aTZubGMybGdmTEFNdktjYzFkOHVVVnZ1WmJOQ2RtVndzemtES1ZselBtNWxZa2FUOUkKZ1l2SUR1cXlxTEFhWHh1VFFLcThhb3pzbDA5TEhtQjFlS3pDaEdKRG9maE54c0NIUXZYS0o3WmRhNEczeDlCT3I0aTF0enh3Z09HYWtnaTk3NEd6b0RydlhOd0U5QjdkaGFqV1NoTXJuWU5JYnRPL0RzbFpQREgKa2s0ZFluTk5rVGlFR1pPWktRSUJBd2FGZEdjNDd4MWhKNkZmL2dBM2xvRkZ5aVBoa2dzQjdyOUhxMzhJenYrTmVteWROTlNBS3QwK0dPQTZ6ZkpDYkFOS2N5cHYyRi8xZz0=";
                           }
                           else if(Platform.isIOS) {
-                            license = "";
+                            license = "RVI0c2lYYXVlalYvTUlHZE1BMEdDU3FHU0liM0RRRUJBUVVBQTRHTEFEQ0J5OG9od0tCZ1FDbHR2bFlNdDJDUnpSMmpMNW42bDRNRWRBSUZPL0tLCkZUMkdDU2Vvb3JManZ3d1EzRDQ5K2ZtOUdzd1hjN1l0Z3Y3U2pNNE9jWDFzM2E3dmUrMFQrUVovN1YyUkZnUVZiaFJHL1JGMlJQRHFlMkp6anlpWnAKNEV1SXVHWlNuSXpHOWYyZHl6b3owa2RjOVpmcmRPVHZNRG1XUWp3c0oxRXZiRitaZEFPY3Y2VlBHNnhBYWZNS0NLMm9EaE05V0ZBVGhnNlJJQzUrMkhoRG5YQmdhTGcwZ3BOa2tJbGlwVFJDWWltSWR5OE5RWVYKMmVwSlFwek0zNms5UnRWeER3SUJBd2hoZHB1WDlFUE10MlNEd093dDFTTmxwZVFVckIxYmI5NkFoR3pyTUJMcU5YYWpZUUdwM2tJZUhidW1hM2RyQzVWMFUxSjF4NENUVT0=";
                           }
 
                           await YuzhouBeautyAgoraPlugin.setLicense(license);
@@ -235,7 +236,15 @@ class _MyAppState extends State<MyApp> {
                 Text("markup: " + (curMarkupCount == 0 ? "--" : makeup_values[(curMarkupCount - 1 ) % makeup_values.length]) +
                     "\n" + "sticker: " + (curStickCount == 0 ? "--" : sticker_values[(curStickCount - 1 ) % sticker_values.length])),
               ],
-            )
+            ),
+
+            Positioned(child: Slider(value: _sliderValue,min: 0,max:100,onChanged: (v){
+              setState(() {
+                _sliderValue = v;
+              });
+              YuzhouBeautyAgoraPlugin.setSimpleBeautyValue(SimpleBeautyType.EYE_TILT, v/100);
+            },),bottom: 50,),
+
             
 
 
