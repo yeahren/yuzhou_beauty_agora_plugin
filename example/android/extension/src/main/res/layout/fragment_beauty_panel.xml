@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/render_compare"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="10dp"
+        android:src="@mipmap/render_compare"
+        app:layout_constraintBottom_toTopOf="@+id/tab_recycler_view"
+        app:layout_constraintStart_toStartOf="@+id/tab_recycler_view" />
+
+
+    <LinearLayout
+        android:id="@+id/reset"
+        android:layout_width="70dp"
+        android:layout_height="50dp"
+        android:background="#804E4E4E"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tab_recycler_view"
+        app:layout_constraintStart_toEndOf="@+id/tab_recycler_view"
+        app:layout_constraintTop_toTopOf="@+id/tab_recycler_view">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@mipmap/beauty_reset" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="重置"
+            android:textColor="#fff" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/llTextureLayout"
+        android:layout_width="65dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/texture_bg"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/beauty_seekbar"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/tvTexture1"
+            style="@style/texture"
+            android:background="@drawable/texture_select_top"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tvTexture2"
+            style="@style/texture"
+            android:background="@drawable/texture_select"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tvTexture3"
+            style="@style/texture"
+            android:background="@drawable/texture_select"
+            android:visibility="gone" />
+
+        <FrameLayout
+            android:id="@+id/llCurrent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/texture_select_bottom">
+
+            <TextView
+                android:id="@+id/tvTextureCurrent"
+                style="@style/texture"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginTop="0dp"
+                android:minWidth="0dp"
+                android:text="水润" />
+
+            <ImageView
+                android:id="@+id/ivMore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/texture_more" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <SeekBar
+        android:id="@+id/beauty_seekbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginBottom="20dp"
+        android:paddingTop="10dp"
+        android:progressDrawable="@drawable/progress_drawable"
+        android:thumb="@drawable/progress_thumb"
+        app:layout_constraintBottom_toTopOf="@+id/tab_recycler_view"
+        app:layout_constraintEnd_toStartOf="@+id/beauty_seekbar_title"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/beauty_seekbar_progress"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/progress_value_bg"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="#fff"
+        app:layout_constraintBottom_toTopOf="@+id/beauty_seekbar"
+        app:layout_constraintEnd_toEndOf="@+id/beauty_seekbar"
+        app:layout_constraintStart_toStartOf="@+id/beauty_seekbar" />
+
+    <TextView
+        android:id="@+id/beauty_seekbar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="17dp"
+        android:gravity="center"
+        android:text="整妆"
+        android:textColor="#fff"
+        android:visibility="gone"
+        android:layout_marginEnd="15dp"
+        app:layout_constraintBottom_toBottomOf="@+id/beauty_seekbar"
+        app:layout_constraintEnd_toStartOf="@id/llTextureLayout"
+        app:layout_constraintTop_toTopOf="@+id/beauty_seekbar" />
+
+    <SeekBar
+        android:id="@+id/filter_seekbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginBottom="10dp"
+        android:paddingTop="10dp"
+        android:progressDrawable="@drawable/progress_drawable"
+        android:thumb="@drawable/progress_thumb"
+        app:layout_constraintBottom_toTopOf="@+id/beauty_seekbar_progress"
+        app:layout_constraintEnd_toStartOf="@+id/filter_seekbar_title"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteX="24dp" />
+
+    <TextView
+        android:id="@+id/filter_seekbar_progress"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/progress_value_bg"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="#fff"
+
+        app:layout_constraintBottom_toTopOf="@+id/filter_seekbar"
+        app:layout_constraintEnd_toEndOf="@+id/filter_seekbar"
+        app:layout_constraintStart_toStartOf="@+id/filter_seekbar" />
+
+
+    <TextView
+        android:id="@+id/filter_seekbar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="滤镜"
+        android:visibility="gone"
+        android:textColor="#fff"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/filter_seekbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/filter_seekbar" />
+
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#fff"
+        app:layout_constraintBottom_toTopOf="@+id/data_recycler_view"
+        tools:layout_editor_absoluteX="10dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/tab_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginEnd="70dp"
+        android:background="#804E4E4E"
+        app:layout_constraintBottom_toTopOf="@id/view"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/data_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#804E4E4E"
+        app:layout_constraintBottom_toBottomOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

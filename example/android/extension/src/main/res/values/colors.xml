@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="transparent">#00ffffff</color>
+    <color name="main_tab_item_border">#34BCC2D8</color>
+    <color name="beauty_border">#2DC8B1</color>
+    <color name="black">#000000</color>
+    <color name="texture_bg">#66000000</color>
+    <color name="texture_selected">#33000000</color>
+    <color name="beauty_bg">#11cccccc</color>
+    <color name="white">#ffffff</color>
+    <color name="white_transparent">#66FFFFFF</color>
+</resources>

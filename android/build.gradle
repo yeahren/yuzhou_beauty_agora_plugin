@@ -1,0 +1,95 @@
+group 'com.sc.jojo.yuzhou_beauty_agora_plugin'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    project.ext {
+        agora_sdk_version = "4.2.0"
+    }
+
+    ext.kotlin_version = '1.7.10'
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.3.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    if (project.android.hasProperty("namespace")) {
+        namespace 'com.sc.jojo.yuzhou_beauty_agora_plugin'
+    }
+
+    compileSdkVersion 33
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
+    }
+
+    defaultConfig {
+        minSdkVersion 19
+        externalNativeBuild {
+            cmake {
+                cppFlags ''
+                arguments "-DAGORA_SDK_VERSION=${project.ext.agora_sdk_version}"
+                abiFilters "arm64-v8a", "armeabi-v7a"
+            }
+        }
+    }
+
+    testOptions {
+        unitTests.all {
+            useJUnitPlatform()
+
+            testLogging {
+               events "passed", "skipped", "failed", "standardOut", "standardError"
+               outputs.upToDateWhen {false}
+               showStandardStreams = true
+            }
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            path file('src/main/cpp/CMakeLists.txt')
+            version '3.22.1'
+        }
+    }
+
+}
+
+dependencies {
+    compileOnly fileTree(dir: 'libs', include: ['*.aar'])
+
+    implementation "com.squareup.okhttp3:okhttp:3.14.9"
+    implementation "com.google.code.gson:gson:2.2.4"
+    implementation "com.getkeepsafe.relinker:relinker:1.4.4"
+
+    implementation project(path: ':camera')
+    implementation project(path: ':extension')
+
+    implementation "io.github.crow-misia.libyuv:libyuv-android:0.28.0"
+}

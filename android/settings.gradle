@@ -1,0 +1,3 @@
+rootProject.name = 'yuzhou_beauty_agora_plugin'
+include ':camera'
+include ':extension'

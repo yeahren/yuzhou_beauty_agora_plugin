@@ -1,0 +1,86 @@
+PODS:
+  - agora_rtc_engine (6.2.0):
+    - AgoraIrisRTC_iOS (= 4.2.0-build.3)
+    - AgoraRtcEngine_iOS (= 4.2.0)
+    - Flutter
+  - AgoraIrisRTC_iOS (4.2.0-build.3)
+  - AgoraRtcEngine_iOS (4.2.0):
+    - AgoraRtcEngine_iOS/AIAEC (= 4.2.0)
+    - AgoraRtcEngine_iOS/AINS (= 4.2.0)
+    - AgoraRtcEngine_iOS/AudioBeauty (= 4.2.0)
+    - AgoraRtcEngine_iOS/ClearVision (= 4.2.0)
+    - AgoraRtcEngine_iOS/ContentInspect (= 4.2.0)
+    - AgoraRtcEngine_iOS/DRM (= 4.2.0)
+    - AgoraRtcEngine_iOS/FaceDetection (= 4.2.0)
+    - AgoraRtcEngine_iOS/ReplayKit (= 4.2.0)
+    - AgoraRtcEngine_iOS/RtcBasic (= 4.2.0)
+    - AgoraRtcEngine_iOS/SpatialAudio (= 4.2.0)
+    - AgoraRtcEngine_iOS/VideoCodecDec (= 4.2.0)
+    - AgoraRtcEngine_iOS/VideoCodecEnc (= 4.2.0)
+    - AgoraRtcEngine_iOS/VirtualBackground (= 4.2.0)
+    - AgoraRtcEngine_iOS/VQA (= 4.2.0)
+  - AgoraRtcEngine_iOS/AIAEC (4.2.0)
+  - AgoraRtcEngine_iOS/AINS (4.2.0)
+  - AgoraRtcEngine_iOS/AudioBeauty (4.2.0)
+  - AgoraRtcEngine_iOS/ClearVision (4.2.0)
+  - AgoraRtcEngine_iOS/ContentInspect (4.2.0)
+  - AgoraRtcEngine_iOS/DRM (4.2.0)
+  - AgoraRtcEngine_iOS/FaceDetection (4.2.0)
+  - AgoraRtcEngine_iOS/ReplayKit (4.2.0)
+  - AgoraRtcEngine_iOS/RtcBasic (4.2.0)
+  - AgoraRtcEngine_iOS/SpatialAudio (4.2.0)
+  - AgoraRtcEngine_iOS/VideoCodecDec (4.2.0)
+  - AgoraRtcEngine_iOS/VideoCodecEnc (4.2.0)
+  - AgoraRtcEngine_iOS/VirtualBackground (4.2.0)
+  - AgoraRtcEngine_iOS/VQA (4.2.0)
+  - Flutter (1.0.0)
+  - integration_test (0.0.1):
+    - Flutter
+  - iris_method_channel (0.0.1):
+    - Flutter
+  - "permission_handler (5.1.0+2)":
+    - Flutter
+  - yuzhou_beauty_agora_plugin (0.0.1):
+    - AgoraRtcEngine_iOS
+    - Flutter
+
+DEPENDENCIES:
+  - agora_rtc_engine (from `.symlinks/plugins/agora_rtc_engine/ios`)
+  - Flutter (from `Flutter`)
+  - integration_test (from `.symlinks/plugins/integration_test/ios`)
+  - iris_method_channel (from `.symlinks/plugins/iris_method_channel/ios`)
+  - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
+  - yuzhou_beauty_agora_plugin (from `.symlinks/plugins/yuzhou_beauty_agora_plugin/ios`)
+
+SPEC REPOS:
+  trunk:
+    - AgoraIrisRTC_iOS
+    - AgoraRtcEngine_iOS
+
+EXTERNAL SOURCES:
+  agora_rtc_engine:
+    :path: ".symlinks/plugins/agora_rtc_engine/ios"
+  Flutter:
+    :path: Flutter
+  integration_test:
+    :path: ".symlinks/plugins/integration_test/ios"
+  iris_method_channel:
+    :path: ".symlinks/plugins/iris_method_channel/ios"
+  permission_handler:
+    :path: ".symlinks/plugins/permission_handler/ios"
+  yuzhou_beauty_agora_plugin:
+    :path: ".symlinks/plugins/yuzhou_beauty_agora_plugin/ios"
+
+SPEC CHECKSUMS:
+  agora_rtc_engine: 615886d3897e0f62da2b7f31e2d49a630260b376
+  AgoraIrisRTC_iOS: 401703d4d44b0d0e4f060993272397d1ba4ce7ca
+  AgoraRtcEngine_iOS: ab13aeb715fc00abc91c4f5c0baab9f05ad79aae
+  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  integration_test: 13825b8a9334a850581300559b8839134b124670
+  iris_method_channel: 0617c689164d8154c020c50f63ca79f92b8a7b9d
+  permission_handler: ccb20a9fad0ee9b1314a52b70b76b473c5f8dab0
+  yuzhou_beauty_agora_plugin: 1e7f8804f4d354c39f2a9af75fcc939d3387ced4
+
+PODFILE CHECKSUM: bfd8cb9c5a07b05028ccd5e7d27153963d4bba14
+
+COCOAPODS: 1.12.1
