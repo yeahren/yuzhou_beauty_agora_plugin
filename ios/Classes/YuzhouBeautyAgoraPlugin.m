@@ -13,10 +13,13 @@ AgoraVideoFrameObserver *_ob;
     NSString *ret = @"";
     /**
      enum SimpleBeautyType {
+       CHEEKBONE_WIDTH,      // 颧骨
+       THIN_FACE,            // 瘦脸
+       EYE_HEIGHT,           // 眼高
        SKIN_SMOOTH,          // 磨皮
        SKIN_WHITENING,       // 美白
        RUDDY,                // 红润
-       SHARPEN,              // 瘦脸
+       SHARPEN,              // 锐化
        FACE_WIDTH,           // 脸宽
        JAW_SHAPE,            // 削脸
        SHORTEN_FACE,         // 短脸
@@ -41,6 +44,9 @@ AgoraVideoFrameObserver *_ob;
      */
     
     NSDictionary *mapping = @{
+        @"CHEEKBONE_WIDTH": CHEEKBONE_WIDTH,
+        @"THIN_FACE": THIN_FACE,
+        @"EYE_HEIGHT": EYE_HEIGHT,
         @"SKIN_SMOOTH": SKIN_SMOOTH,
         @"SKIN_WHITENING": SKIN_WHITENING,
         @"RUDDY":RUDDY,

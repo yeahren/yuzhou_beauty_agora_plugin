@@ -1,5 +1,9 @@
 #### version: v1.0.0
 
+#### Prepare
+1. unzip Frameworks.zip to ios/ 
+2. example/lib/main.dart 修改license
+
 #### 开启美颜:
 
 功能：开启美颜
@@ -22,10 +26,13 @@ await YuzhouBeautyAgoraPlugin.turnOffBeauty(handle);
 
 ```dart
 enum SimpleBeautyType {
+  CHEEKBONE_WIDTH,      // 颧骨
+  THIN_FACE,            // 瘦脸
+  EYE_HEIGHT,           // 眼高
   SKIN_SMOOTH,          // 磨皮
   SKIN_WHITENING,       // 美白
   RUDDY,                // 红润
-  SHARPEN,              // 瘦脸
+  SHARPEN,              // 锐化
   FACE_WIDTH,           // 脸宽
   JAW_SHAPE,            // 削脸
   SHORTEN_FACE,         // 短脸
