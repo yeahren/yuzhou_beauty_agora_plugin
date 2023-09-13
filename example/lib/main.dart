@@ -242,7 +242,7 @@ class _MyAppState extends State<MyApp> {
               setState(() {
                 _sliderValue = v;
               });
-              YuzhouBeautyAgoraPlugin.setSimpleBeautyValue(SimpleBeautyType.EYE_TILT, v/100);
+              YuzhouBeautyAgoraPlugin.setSimpleBeautyValue(SimpleBeautyType.THIN_FACE, v/100);
             },),bottom: 50,),
 
             
