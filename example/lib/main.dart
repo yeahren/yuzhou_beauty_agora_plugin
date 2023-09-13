@@ -57,11 +57,20 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     this._initEngine();
+
+    //test only
+    YuzhouBeautyAgoraPlugin.init();
+    YuzhouBeautyAgoraPlugin.dispose();
+
+
+    YuzhouBeautyAgoraPlugin.init();
+
   }
 
   @override
   void dispose() {
     super.dispose();
+    YuzhouBeautyAgoraPlugin.dispose();
     this._deinitEngine();
   }
 
@@ -158,6 +167,14 @@ class _MyAppState extends State<MyApp> {
                           await YuzhouBeautyAgoraPlugin.setLicense(license);
 
                           var handle = await engine.getNativeHandle();
+                          await YuzhouBeautyAgoraPlugin.turnOnBeauty(handle);
+
+                          //test only
+                          YuzhouBeautyAgoraPlugin.dispose();
+                          YuzhouBeautyAgoraPlugin.init();
+
+                          // re-try
+                          handle = await engine.getNativeHandle();
                           await YuzhouBeautyAgoraPlugin.turnOnBeauty(handle);
 
                           setState(() {

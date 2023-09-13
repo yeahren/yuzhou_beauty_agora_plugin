@@ -75,7 +75,7 @@ AgoraVideoFrameObserver *_ob;
     
     NSString *value = [mapping valueForKey:flutterKey];
     
-    if(value != NULL)
+    if(value != nil)
         ret = value;
     
     
@@ -89,47 +89,78 @@ AgoraVideoFrameObserver *_ob;
     YuzhouBeautyAgoraPlugin* instance = [[YuzhouBeautyAgoraPlugin alloc] init];
     [registrar addMethodCallDelegate:instance channel:channel];
     
-    instance.beautyRender = [[CEBeautyRender alloc] init];
+}
+
+- (void)APISetupLicense: (NSString*)license {
+    if(license == nil)
+        return;
+    
+    if(![self.license isEqualToString:license])
+        [self.beautyRender setupWithLicense: license];
+    
+    self.license = license;
 }
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
-    if ([@"getPlatformVersion" isEqualToString:call.method]) {
-        result([@"iOS " stringByAppendingString:[[UIDevice currentDevice] systemVersion]]);
+    if ([@"init" isEqualToString:call.method]) {
+        self.beautyRender = [[CEBeautyRender alloc] init];
+        self.turnOn = false;
+        
+        [self APISetupLicense:self.license];
+        
+        result([NSNumber numberWithBool:true]);
+    }
+    else if([@"dispose" isEqualToString:call.method]) {
+        if(_ob != nil) {
+            [_ob unregisterVideoFrameObserver];
+            _ob = nil;
+        }
+        self.turnOn = false;
+        
+        result([NSNumber numberWithBool:true]);
     }
     else if([@"setLicense" isEqualToString:call.method]) {
-        [self.beautyRender setupWithLicense: call.arguments];
+        if(self.beautyRender == nil)
+            result([NSNumber numberWithBool:false]);
+        
+        [self APISetupLicense:call.arguments];
         
         result([NSNumber numberWithBool:true]);
     }
     else if([@"turnOnBeauty" isEqualToString:call.method]) {
-        if(self.beautyRender == NULL)
+        if(self.beautyRender == nil)
             result([NSNumber numberWithBool:false]);
-            
+        
         if(_ob == nil) {
             if([call.arguments isKindOfClass:[NSNumber class]]) {
                 NSNumber *handler = call.arguments;
                 _ob = [[AgoraVideoFrameObserver alloc] initWithEngineHandle:[handler longValue] render:self.beautyRender];
             }
+            
+            [_ob registerVideoFrameObserver];
         }
         
-        [_ob registerVideoFrameObserver];
+        self.turnOn = YES;
+        
+        if(_ob != nil)
+            [_ob setTurnOn:self.turnOn];
         
         result([NSNumber numberWithBool:true]);
         
     }
     else if([@"turnOffBeauty" isEqualToString:call.method]) {
-        if(self.beautyRender == NULL)
+        if(self.beautyRender == nil)
             result([NSNumber numberWithBool:false]);
         
-        if(_ob != nil) {
-            [_ob unregisterVideoFrameObserver];
-            _ob = nil;
-        }
+        self.turnOn = NO;
+
+        if(_ob != nil)
+            [_ob setTurnOn:self.turnOn];
         
         result([NSNumber numberWithBool:true]);
     }
     else if([@"setSimpleBeautyValue" isEqualToString:call.method]) {
-        if(self.beautyRender == NULL)
+        if(self.beautyRender == nil || !self.turnOn)
             result([NSNumber numberWithBool:false]);
         
         NSString *key = call.arguments[@"type"];
@@ -142,7 +173,7 @@ AgoraVideoFrameObserver *_ob;
         result([NSNumber numberWithBool:true]);
     }
     else if([@"setMakeup" isEqualToString:call.method]) {
-        if(self.beautyRender == NULL)
+        if(self.beautyRender == nil || !self.turnOn)
             result([NSNumber numberWithBool:false]);
         
         NSString *path = call.arguments[@"path"];
@@ -167,7 +198,7 @@ AgoraVideoFrameObserver *_ob;
         }
     }
     else if([@"setSticker" isEqualToString:call.method]) {
-        if(self.beautyRender == NULL)
+        if(self.beautyRender == nil || !self.turnOn)
             result([NSNumber numberWithBool:false]);
         
         NSString *path = call.arguments[@"path"];

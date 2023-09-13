@@ -32,7 +32,6 @@ NS_ASSUME_NONNULL_BEGIN
 // 图像数据形式, 默认CERenderInputTypeStream。 相机或视频CERenderInputTypeStream，静态图片CERenderInputTypeStatic
 @property (nonatomic, assign) CBRenderInputType inputType;
 
-- (instancetype)initWithLicense: (NSString *)license;
 - (BOOL)setupWithLicense: (NSString *)license;
 
 // 设置美颜参数

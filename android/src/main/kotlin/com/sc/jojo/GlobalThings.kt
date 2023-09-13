@@ -6,7 +6,7 @@ import android.widget.Toast
 import com.sc.jojo.beauty.SdkApi
 
 lateinit var AppContext: Context
-val sdkApi: SdkApi = SdkApi()
+var sdkApi: SdkApi? = null
 const val GlobalLogTag = "SDK_Demo"
 internal var LogSwitch = true
 internal var DebugLogSwitch = true

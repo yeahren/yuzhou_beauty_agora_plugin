@@ -13,6 +13,7 @@ import com.cosmos.beauty.module.sticker.IStickerModule
 import com.cosmos.camera.util.ImageFrame
 import com.sc.jojo.VideoFrame
 import com.sc.jojo.VideoFrameObserverDelegate
+import com.sc.jojo.beauty.SdkApi
 import com.sc.jojo.json_load.ConfigLoader
 import com.sc.jojo.sdkApi
 
@@ -35,6 +36,7 @@ import kotlin.concurrent.thread
 /** YuzhouBeautyAgoraPlugin */
 class YuzhouBeautyAgoraPlugin: FlutterPlugin, ActivityAware, MethodCallHandler {
     private val TAG = "YuzhouBeautyAgoraPlugin"
+    private var license: String = ""
     private lateinit var channel : MethodChannel
     private var videoFrameObserverDelegate: VideoFrameObserverDelegate? = null
     private lateinit var textureBufferHelper: TextureBufferHelper
@@ -42,15 +44,16 @@ class YuzhouBeautyAgoraPlugin: FlutterPlugin, ActivityAware, MethodCallHandler {
     private lateinit var videoNV21ByteArray: ByteArray
     private var activity: Activity? = null
     private var isSdkApiInit = false
+    private var turnOn = false
 
     val renderModuleManager: IMMRenderModuleManager?
-        get() = sdkApi.renderModuleManager
+        get() = sdkApi?.renderModuleManager
     val beautyModule: IBeautyModule?
-        get() = sdkApi.beautyModule
+        get() = sdkApi?.beautyModule
     val makeupModule: IMakeupBeautyModule?
-        get() = sdkApi.makeupModule
+        get() = sdkApi?.makeupModule
     val stickerModule: IStickerModule?
-        get() = sdkApi.stickerModule
+        get() = sdkApi?.stickerModule
 
     private val configLoader: ConfigLoader by lazy { ConfigLoader() }
 
@@ -66,23 +69,53 @@ class YuzhouBeautyAgoraPlugin: FlutterPlugin, ActivityAware, MethodCallHandler {
         channel.setMethodCallHandler(this)
     }
 
+    fun APIInit(): Unit {
+        APIDispose()
+
+        sdkApi = SdkApi()
+
+        APISetLicense(this.license)
+    }
+
+    fun APIDispose(): Unit {
+        videoFrameObserverDelegate?.unregisterVideoFrameObserver()
+        videoFrameObserverDelegate = null
+
+        sdkApi?.unInit()
+        sdkApi = null
+        isSdkApiInit = false
+    }
+
+    fun APISetLicense(license: String) {
+        if(sdkApi?.license == license)
+            return
+
+        this.license = license
+        sdkApi?.license = license
+
+        sdkApi?.init(AppContext) {
+            this.isSdkApiInit = true
+            Log.i(TAG, "sdkApi.init success")
+        }
+
+    }
+
     override fun onMethodCall(call: MethodCall, result: Result) {
         when(call.method) {
-            "getPlatformVersion" -> {
-                result.success("Android ${android.os.Build.VERSION.RELEASE}")
+            "init" -> {
+                APIInit()
+
+                return result.success(true)
+            }
+
+            "dispose" -> {
+                APIDispose()
+
+                return result.success(true)
             }
 
             "setLicense" -> {
-                if(sdkApi.license == call.arguments as String)
-                    result.success(true)
-                else {
-                    sdkApi.license = call.arguments as String
-
-                    sdkApi.init(AppContext) {
-                        this.isSdkApiInit = true
-                        Log.i(TAG, "sdkApi.init success")
-                    }
-                }
+                APISetLicense(call.arguments as String)
 
                 return result.success(true)
             }
@@ -91,11 +124,16 @@ class YuzhouBeautyAgoraPlugin: FlutterPlugin, ActivityAware, MethodCallHandler {
                 if(!isSdkApiInit)
                     return result.success(false)
 
+                turnOn = true
+
                 if(videoFrameObserverDelegate == null) {
                     videoFrameObserverDelegate = object: VideoFrameObserverDelegate(call.arguments as Long) {
                         override fun onCaptureVideoFrame(
                             sourceType: Int, videoFrame: VideoFrame
                         ): Boolean {
+
+                            if(!turnOn)
+                                return true
 
                             if (!this@YuzhouBeautyAgoraPlugin::textureBufferHelper.isInitialized) {
                                 textureBufferHelper = TextureBufferHelper.create(
@@ -175,7 +213,7 @@ class YuzhouBeautyAgoraPlugin: FlutterPlugin, ActivityAware, MethodCallHandler {
                                 if (textureId == -1) {
                                     return true;
                                 }
-//
+
                                 val textureBuffer = textureBufferHelper.wrapTextureBuffer(
                                     videoFrame.width,
                                     videoFrame.height,
@@ -209,9 +247,9 @@ class YuzhouBeautyAgoraPlugin: FlutterPlugin, ActivityAware, MethodCallHandler {
                             return true;
                         }
                     }
-                }
 
-                videoFrameObserverDelegate?.registerVideoFrameObserver()
+                    videoFrameObserverDelegate?.registerVideoFrameObserver()
+                }
 
                 return result.success(true)
             }
@@ -220,14 +258,13 @@ class YuzhouBeautyAgoraPlugin: FlutterPlugin, ActivityAware, MethodCallHandler {
                 if(!isSdkApiInit)
                     return result.success(false)
 
-                videoFrameObserverDelegate?.unregisterVideoFrameObserver()
-                videoFrameObserverDelegate = null
+                turnOn = false
 
                 return result.success(true)
             }
 
             "setSimpleBeautyValue" -> {
-                if(!isSdkApiInit)
+                if(!isSdkApiInit  || !turnOn)
                     return result.success(false)
 
                 val type = call.argument<String>("type")!!
@@ -239,7 +276,7 @@ class YuzhouBeautyAgoraPlugin: FlutterPlugin, ActivityAware, MethodCallHandler {
             }
 
             "setMakeup" -> {
-                if(!isSdkApiInit)
+                if(!isSdkApiInit || !turnOn)
                     return result.success(false)
 
                 val path = call.argument<String>("path")!!
@@ -254,7 +291,7 @@ class YuzhouBeautyAgoraPlugin: FlutterPlugin, ActivityAware, MethodCallHandler {
             }
 
             "setSticker" -> {
-                if(!isSdkApiInit)
+                if(!isSdkApiInit || !turnOn)
                     return result.success(false)
 
                 val path = call.argument<String>("path")!!

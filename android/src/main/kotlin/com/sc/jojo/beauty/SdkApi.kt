@@ -38,6 +38,10 @@ class SdkApi {
         initSDK(context)
     }
 
+    fun unInit() {
+        unInitModules()
+    }
+
     var license = ""
 
     private fun initSDK(context: Context) {
@@ -89,9 +93,23 @@ class SdkApi {
         callback?.invoke()
     }
 
+    private fun unInitModules() {
+        unInitBeautyModule()
+        unInitMakeupModule()
+        unInitLookupModule()
+        unInitStickerModule()
+        unInitBeautyBodyModule()
+    }
+
     private fun initBeautyBodyModule() {
         beautyBodyModule = CosmosBeautySDK.createBeautyBodyModule()
         renderModuleManager?.registerModule(beautyBodyModule!!)
+    }
+
+    private fun unInitBeautyBodyModule() {
+        renderModuleManager?.unRegisterModule(beautyBodyModule!!)
+        beautyBodyModule?.removeModule()
+        beautyBodyModule = null
     }
 
     private fun initBeautyModule() {
@@ -99,9 +117,21 @@ class SdkApi {
         renderModuleManager?.registerModule(beautyModule!!)
     }
 
+    private fun unInitBeautyModule() {
+        renderModuleManager?.unRegisterModule(beautyModule!!)
+        beautyModule?.removeModule()
+        beautyModule = null
+    }
+
     private fun initMakeupModule() {
         makeupModule = CosmosBeautySDK.createMakeupBeautyModule()
         renderModuleManager?.registerModule(makeupModule!!)
+    }
+
+    private fun unInitMakeupModule() {
+        renderModuleManager?.unRegisterModule(makeupModule!!)
+        makeupModule?.removeModule()
+        makeupModule = null
     }
 
     private fun initLookupModule() {
@@ -109,8 +139,20 @@ class SdkApi {
         renderModuleManager?.registerModule(lookupModule!!)
     }
 
+    private fun unInitLookupModule() {
+        renderModuleManager?.unRegisterModule(lookupModule!!)
+        lookupModule?.removeModule()
+        lookupModule = null
+    }
+
     private fun initStickerModule() {
         stickerModule = CosmosBeautySDK.createStickerModule()
         renderModuleManager?.registerModule(stickerModule!!)
+    }
+
+    private fun unInitStickerModule() {
+        renderModuleManager?.unRegisterModule(stickerModule!!)
+        stickerModule?.removeModule()
+        stickerModule = null
     }
 }

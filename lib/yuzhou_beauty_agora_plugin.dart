@@ -33,6 +33,14 @@ class YuzhouBeautyAgoraPlugin {
     return YuzhouBeautyAgoraPluginPlatform.instance.setLicense(license);
   }
 
+  static void init() {
+    return YuzhouBeautyAgoraPluginPlatform.instance.init();
+  }
+
+  static void dispose() {
+    return YuzhouBeautyAgoraPluginPlatform.instance.dispose();
+  }
+
 
 
 

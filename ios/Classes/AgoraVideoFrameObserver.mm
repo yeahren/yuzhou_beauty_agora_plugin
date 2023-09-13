@@ -16,7 +16,7 @@ namespace agora {
 class VideoFrameObserver : public media::IVideoFrameObserver {
 public:
     VideoFrameObserver(long long engineHandle, void *observer, void *render)
-    : engineHandle(engineHandle), observer(observer), render(render) {
+    : engineHandle(engineHandle), observer(observer), render(render), turnOn(false) {
         auto rtcEngine = reinterpret_cast<rtc::IRtcEngine *>(engineHandle);
         if (rtcEngine) {
             util::AutoPtr<media::IMediaEngine> mediaEngine;
@@ -38,9 +38,16 @@ public:
         }
     }
     
+    void setTurnOn(bool value) {
+        turnOn = value;
+    }
+    
 public:
     bool onCaptureVideoFrame(agora::rtc::VIDEO_SOURCE_TYPE type,
                              VideoFrame &videoFrame) override {
+        if(!this->turnOn)
+            return true;
+        
         NSDictionary* options = @{
             (id)kCVPixelBufferIOSurfaceCoreAnimationCompatibilityKey: @1,
             (id)kCVPixelBufferIOSurfaceOpenGLESFBOCompatibilityKey: @1,
@@ -119,6 +126,7 @@ public:
 private:
     void *observer;
     void *render;
+    bool turnOn;
     long long engineHandle;
 };
 } // namespace agora
@@ -135,6 +143,12 @@ private:
         self.render = render;
     }
     return self;
+}
+
+- (void)setTurnOn: (BOOL)value {
+    if(_observer) {
+        _observer->setTurnOn(value);
+    }
 }
 
 - (void)registerVideoFrameObserver {

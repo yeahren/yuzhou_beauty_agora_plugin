@@ -36,6 +36,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)registerVideoFrameObserver;
 
 - (void)unregisterVideoFrameObserver;
+
+- (void)setTurnOn: (BOOL)value;
 @end
 
 NS_ASSUME_NONNULL_END

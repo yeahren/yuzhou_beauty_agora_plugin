@@ -4,4 +4,6 @@
 
 @interface YuzhouBeautyAgoraPlugin : NSObject<FlutterPlugin>
 @property (nonatomic, strong) CEBeautyRender* beautyRender;
+@property (nonatomic, assign) BOOL turnOn ;
+@property (nonatomic, strong) NSString* license;
 @end

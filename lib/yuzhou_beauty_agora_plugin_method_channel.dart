@@ -54,5 +54,13 @@ class MethodChannelYuzhouBeautyAgoraPlugin extends YuzhouBeautyAgoraPluginPlatfo
     return methodChannel.invokeMethod('setLicense', license);
   }
 
+  @override
+  void init() async {
+    return methodChannel.invokeMethod('init');
+  }
 
+  @override
+  void dispose() async {
+    return methodChannel.invokeMethod('dispose');
+  }
 }

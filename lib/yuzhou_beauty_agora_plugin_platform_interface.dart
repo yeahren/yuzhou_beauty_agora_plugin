@@ -53,5 +53,11 @@ abstract class YuzhouBeautyAgoraPluginPlatform extends PlatformInterface {
     throw UnimplementedError('setLicense() has not been implemented.');
   }
 
+  void init() {
+    throw UnimplementedError('init() has not been implemented.');
+  }
 
+  void dispose() {
+    throw UnimplementedError('dispose() has not been implemented.');
+  }
 }
