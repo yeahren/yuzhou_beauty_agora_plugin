@@ -41,6 +41,16 @@ class YuzhouBeautyAgoraPlugin {
     return YuzhouBeautyAgoraPluginPlatform.instance.dispose();
   }
 
+  static Future<void> clearMakeup() {
+    return YuzhouBeautyAgoraPluginPlatform.instance.clearMakeup();
+  }
+
+  static Future<void> clearSticker() {
+    return YuzhouBeautyAgoraPluginPlatform.instance.clearSticker();
+  }
+
+
+
 
 
 

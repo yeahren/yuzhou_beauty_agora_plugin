@@ -273,6 +273,8 @@ class YuzhouBeautyAgoraPlugin: FlutterPlugin, ActivityAware, MethodCallHandler {
                 Log.i(TAG, "setSimpleBeautyValue:${type}, ${simpleBeautyTypeValue}-${simpleBeautyTypeValue.ordinal}, ${value}")
 
                 beautyModule?.setValue(simpleBeautyTypeValue, value)
+
+                return result.success(true)
             }
 
             "setMakeup" -> {
@@ -288,6 +290,8 @@ class YuzhouBeautyAgoraPlugin: FlutterPlugin, ActivityAware, MethodCallHandler {
                 makeupModule?.addMakeup(path)
                 makeupModule?.setValue(MakeupType.MAKEUP_STYLE, style_value)
                 makeupModule?.setValue(MakeupType.MAKEUP_LUT, lut_value)
+
+                return result.success(true)
             }
 
             "setSticker" -> {
@@ -300,6 +304,26 @@ class YuzhouBeautyAgoraPlugin: FlutterPlugin, ActivityAware, MethodCallHandler {
                 stickerModule?.clear()
                 stickerModule?.addMaskModel(File(path)) {
                 }
+
+                return result.success(true)
+            }
+
+            "clearMakeup" -> {
+                if(!isSdkApiInit || !turnOn)
+                    return result.success(false)
+
+                makeupModule?.clear()
+
+                return result.success(true)
+            }
+
+            "clearSticker" -> {
+                if(!isSdkApiInit || !turnOn)
+                    return result.success(false)
+
+                stickerModule?.clear()
+
+                return result.success(true)
             }
 
             else -> {

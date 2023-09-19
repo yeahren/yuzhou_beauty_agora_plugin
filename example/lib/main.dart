@@ -151,103 +151,120 @@ class _MyAppState extends State<MyApp> {
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    TextButton(
-                        onPressed: !turnOnBeauty
-                            ? () async {
-                          if(Platform.isAndroid) {
-                            license = "";
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child:Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      TextButton(
+                          onPressed: !turnOnBeauty
+                              ? () async {
+                            if(Platform.isAndroid) {
+                              license = "";
+                            }
+                            else if(Platform.isIOS) {
+                              license = "";
+                            }
+
+                            await YuzhouBeautyAgoraPlugin.setLicense(license);
+
+                            var handle = await engine.getNativeHandle();
+                            await YuzhouBeautyAgoraPlugin.turnOnBeauty(handle);
+
+                            //test only
+                            YuzhouBeautyAgoraPlugin.dispose();
+                            YuzhouBeautyAgoraPlugin.init();
+
+                            // re-try
+                            handle = await engine.getNativeHandle();
+                            await YuzhouBeautyAgoraPlugin.turnOnBeauty(handle);
+
+                            setState(() {
+                              turnOnBeauty = true;
+                            });
                           }
-                          else if(Platform.isIOS) {
-                            license = "";
-                          }
+                              : () async {
+                            var handle = await engine.getNativeHandle();
+                            await YuzhouBeautyAgoraPlugin.turnOffBeauty(handle);
 
-                          await YuzhouBeautyAgoraPlugin.setLicense(license);
+                            setState(() {
+                              turnOnBeauty = false;
+                            });
+                          },
+                          child: Text(turnOnBeauty ? 'Beauty Off' : 'Beauty On')),
+                      TextButton(
+                          onPressed: () {
+                            YuzhouBeautyAgoraPlugin.setSimpleBeautyValue(SimpleBeautyType.FACE_WIDTH, 0.5);
+                            YuzhouBeautyAgoraPlugin.setSimpleBeautyValue(SimpleBeautyType.BIG_EYE, 1.0);
+                          },
+                          child: Text("美颜")
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            var value = makeup_values[curMarkupCount++ % makeup_values.length];
 
-                          var handle = await engine.getNativeHandle();
-                          await YuzhouBeautyAgoraPlugin.turnOnBeauty(handle);
+                            var trueRootPath = "";
 
-                          //test only
-                          YuzhouBeautyAgoraPlugin.dispose();
-                          YuzhouBeautyAgoraPlugin.init();
+                            if(Platform.isAndroid) {
+                              trueRootPath = makeup_root_path_android;
+                            }
+                            else if(Platform.isIOS) {
+                              trueRootPath = makeup_root_path_ios;
+                            }
 
-                          // re-try
-                          handle = await engine.getNativeHandle();
-                          await YuzhouBeautyAgoraPlugin.turnOnBeauty(handle);
+                            YuzhouBeautyAgoraPlugin.setMakeup(
+                                "$trueRootPath/$value",
+                                0.9,
+                                0.4
+                            );
 
-                          setState(() {
-                            turnOnBeauty = true;
-                          });
-                        }
-                            : () async {
-                          var handle = await engine.getNativeHandle();
-                          await YuzhouBeautyAgoraPlugin.turnOffBeauty(handle);
+                            setState(() {
+                              curMarkupCount;
+                            });
+                          },
+                          child: Text("风格装")
+                      ),
+                      TextButton(
+                          onPressed: () {
 
-                          setState(() {
-                            turnOnBeauty = false;
-                          });
-                        },
-                        child: Text(turnOnBeauty ? 'Beauty Off' : 'Beauty On')),
-                    TextButton(
-                        onPressed: () {
-                          YuzhouBeautyAgoraPlugin.setSimpleBeautyValue(SimpleBeautyType.FACE_WIDTH, 0.5);
-                          YuzhouBeautyAgoraPlugin.setSimpleBeautyValue(SimpleBeautyType.BIG_EYE, 1.0);
-                        },
-                        child: Text("美颜")
-                    ),
-                    TextButton(
-                        onPressed: () {
-                          var value = makeup_values[curMarkupCount++ % makeup_values.length];
+                            var value = sticker_values[curStickCount++ % sticker_values.length];
 
-                          var trueRootPath = "";
+                            var trueRootPath = "";
 
-                          if(Platform.isAndroid) {
-                            trueRootPath = makeup_root_path_android;
-                          }
-                          else if(Platform.isIOS) {
-                            trueRootPath = makeup_root_path_ios;
-                          }
-
-                          YuzhouBeautyAgoraPlugin.setMakeup(
-                              "$trueRootPath/$value",
-                              0.9,
-                              0.4
-                          );
-
-                          setState(() {
-                            curMarkupCount;
-                          });
-                        },
-                        child: Text("风格装")
-                    ),
-                    TextButton(
-                        onPressed: () {
-
-                          var value = sticker_values[curStickCount++ % sticker_values.length];
-
-                          var trueRootPath = "";
-
-                          if(Platform.isAndroid) {
-                            trueRootPath = sticker_root_path_android;
-                          }
-                          else if(Platform.isIOS) {
-                            trueRootPath = sticker_root_path_ios;
-                          }
+                            if(Platform.isAndroid) {
+                              trueRootPath = sticker_root_path_android;
+                            }
+                            else if(Platform.isIOS) {
+                              trueRootPath = sticker_root_path_ios;
+                            }
 
 
-                          YuzhouBeautyAgoraPlugin.setSticker(
-                              "$trueRootPath/$value"
-                          );
+                            YuzhouBeautyAgoraPlugin.setSticker(
+                                "$trueRootPath/$value"
+                            );
 
-                          setState(() {
-                            curStickCount;
-                          });
-                        },
-                        child: Text("贴纸")
-                    ),
-                  ],
+                            setState(() {
+                              curStickCount;
+                            });
+                          },
+                          child: Text("贴纸")
+                      ),
+
+                      TextButton(
+                          onPressed: () {
+                            YuzhouBeautyAgoraPlugin.clearMakeup();
+                          },
+                          child: Text("清除美妆")
+                      ),
+
+                      TextButton(
+                          onPressed: () {
+                            YuzhouBeautyAgoraPlugin.clearSticker();
+                          },
+                          child: Text("清除贴纸")
+                      ),
+                    ],
+                  ),
                 ),
                 Text("markup: " + (curMarkupCount == 0 ? "--" : makeup_values[(curMarkupCount - 1 ) % makeup_values.length]) +
                     "\n" + "sticker: " + (curStickCount == 0 ? "--" : sticker_values[(curStickCount - 1 ) % sticker_values.length])),

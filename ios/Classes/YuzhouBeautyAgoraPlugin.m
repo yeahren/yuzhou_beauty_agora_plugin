@@ -218,6 +218,24 @@ AgoraVideoFrameObserver *_ob;
             result([NSNumber numberWithBool:false]);
         }
     }
+    else if([@"clearMakeup" isEqualToString:call.method]) {
+        if(self.beautyRender == nil || !self.turnOn)
+            result([NSNumber numberWithBool:false]);
+        
+        [self.beautyRender clearMakeup];
+        
+        result([NSNumber numberWithBool:true]);
+        
+    }
+    else if([@"clearSticker" isEqualToString:call.method]) {
+        if(self.beautyRender == nil || !self.turnOn)
+            result([NSNumber numberWithBool:false]);
+        
+        [self.beautyRender clearSticker];
+        
+        result([NSNumber numberWithBool:true]);
+        
+    }
     else {
         result(FlutterMethodNotImplemented);
     }

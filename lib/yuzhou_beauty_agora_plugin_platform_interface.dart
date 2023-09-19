@@ -60,4 +60,12 @@ abstract class YuzhouBeautyAgoraPluginPlatform extends PlatformInterface {
   void dispose() {
     throw UnimplementedError('dispose() has not been implemented.');
   }
+
+  Future<void> clearSticker() {
+    throw UnimplementedError('clearSticker() has not been implemented.');
+  }
+
+  Future<void> clearMakeup() {
+    throw UnimplementedError('clearMakeup() has not been implemented.');
+  }
 }

@@ -63,4 +63,14 @@ class MethodChannelYuzhouBeautyAgoraPlugin extends YuzhouBeautyAgoraPluginPlatfo
   void dispose() async {
     return methodChannel.invokeMethod('dispose');
   }
+
+  @override
+  Future<void> clearMakeup() {
+    return methodChannel.invokeMethod('clearMakeup');
+  }
+
+  @override
+  Future<void> clearSticker() {
+    return methodChannel.invokeMethod('clearSticker');
+  }
 }
