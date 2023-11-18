@@ -4,18 +4,14 @@ import android.app.Activity
 import android.graphics.Matrix
 import android.util.Log
 import com.cosmos.beauty.module.IMMRenderModuleManager
-import com.cosmos.beauty.module.beauty.AutoBeautyType
 import com.cosmos.beauty.module.beauty.IBeautyModule
 import com.cosmos.beauty.module.beauty.MakeupType
 import com.cosmos.beauty.module.beauty.SimpleBeautyType
 import com.cosmos.beauty.module.makeup.IMakeupBeautyModule
 import com.cosmos.beauty.module.sticker.IStickerModule
 import com.cosmos.camera.util.ImageFrame
-import com.sc.jojo.VideoFrame
-import com.sc.jojo.VideoFrameObserverDelegate
 import com.sc.jojo.beauty.SdkApi
 import com.sc.jojo.json_load.ConfigLoader
-import com.sc.jojo.sdkApi
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
@@ -24,9 +20,11 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 
 import io.agora.base.TextureBufferHelper
+import io.agora.base.internal.video.YuvHelper
 import io.agora.rtc2.gl.EglBaseProvider
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
+import io.github.crow_misia.libyuv.I420Buffer
 import io.github.crow_misia.libyuv.I422Buffer
 import io.github.crow_misia.libyuv.Nv21Buffer
 import java.io.File
@@ -223,25 +221,39 @@ class YuzhouBeautyAgoraPlugin: FlutterPlugin, ActivityAware, MethodCallHandler {
                                 )
 
                                 val returnI420 = textureBuffer.toI420()
+                                val tempI420Buffer = I420Buffer.allocate(width, height)
 
-                                val arrDataY = ByteArray(returnI420.dataY.remaining())
-                                returnI420.dataY.get(arrDataY)
-                                arrDataY.copyInto(videoFrame.yBuffer)
+                                YuvHelper.I420Copy(
+                                    returnI420.dataY, returnI420.strideY,
+                                    returnI420.dataU, returnI420.strideU,
+                                    returnI420.dataV, returnI420.strideV,
+                                    tempI420Buffer.planeY.buffer, tempI420Buffer.planeY.rowStride,
+                                    tempI420Buffer.planeU.buffer, tempI420Buffer.planeU.rowStride,
+                                    tempI420Buffer.planeV.buffer, tempI420Buffer.planeV.rowStride,
+                                    width, height
+                                    )
 
-                                val arrDataU = ByteArray(returnI420.dataU.remaining())
-                                returnI420.dataU.get(arrDataU)
-                                arrDataU.copyInto(videoFrame.uBuffer)
+                                tempI420Buffer.convertTo(i422Buffer);
 
-                                val arrDataV = ByteArray(returnI420.dataV.remaining())
-                                returnI420.dataV.get(arrDataV)
-                                arrDataV.copyInto(videoFrame.vBuffer)
+                                i422Buffer.planeY.buffer.get(
+                                    videoFrame.yBuffer,
+                                    0,
+                                    videoFrame.yBuffer.size)
+                                i422Buffer.planeU.buffer.get(
+                                    videoFrame.uBuffer,
+                                    0,
+                                    videoFrame.uBuffer.size)
+                                i422Buffer.planeV.buffer.get(
+                                    videoFrame.vBuffer,
+                                    0,
+                                    videoFrame.vBuffer.size)
 
                                 returnI420.release()
                                 textureBuffer.release()
 
                                 i422Buffer.close()
                                 nv21Buffer.close()
-
+                                tempI420Buffer.close()
                             }
 
                             return true;

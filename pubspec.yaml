@@ -13,6 +13,8 @@ dependencies:
   plugin_platform_interface: ^2.0.2
   iris_method_channel: 1.1.0
   agora_rtc_engine: 6.2.0
+#  iris_method_channel: 2.0.0-dev.3
+#  agora_rtc_engine: 6.2.4
   permission_handler: ^8.3.0
 
 dev_dependencies:

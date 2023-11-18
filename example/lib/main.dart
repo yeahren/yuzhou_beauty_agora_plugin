@@ -80,9 +80,22 @@ class _MyAppState extends State<MyApp> {
     }
 
     engine = createAgoraRtcEngine();
-    await engine.initialize(RtcEngineContext(
+    await engine.initialize(const RtcEngineContext(
         appId: config.appId,
         channelProfile: ChannelProfileType.channelProfileLiveBroadcasting));
+
+    await engine.setCameraCapturerConfiguration(const CameraCapturerConfiguration(
+      cameraDirection: CameraDirection.cameraFront,
+      format: VideoFormat(width:540, height:960, fps: 15),
+      // format: VideoFormat(width:240, height:640, fps: 15),
+      // format: VideoFormat(width:720, height:1280, fps: 15),
+    ));
+
+    // await engine.setVideoEncoderConfiguration(const VideoEncoderConfiguration(
+    //   dimensions: VideoDimensions(width:540, height:960),
+    //   frameRate: 15,
+    //   codecType: VideoCodecType.videoCodecGenericH264,
+    // ));
 
     engine.registerEventHandler(RtcEngineEventHandler(
         onJoinChannelSuccess: (RtcConnection connection, int elapsed) {
@@ -104,10 +117,10 @@ class _MyAppState extends State<MyApp> {
     }));
     await engine.disableAudio();
     await engine.enableVideo();
-    var captureConfig = CameraCapturerConfiguration(
-        cameraDirection: CameraDirection.cameraFront,
-        format: VideoFormat(width: 240, height: 640, fps: 15));
-    await engine.setCameraCapturerConfiguration(captureConfig);
+    // var captureConfig = CameraCapturerConfiguration(
+    //     cameraDirection: CameraDirection.cameraFront,
+    //     format: VideoFormat(width: 240, height: 640, fps: 15));
+    // await engine.setCameraCapturerConfiguration(captureConfig);
 
     await engine.startPreview();
     setState(() {
@@ -160,7 +173,6 @@ class _MyAppState extends State<MyApp> {
                           onPressed: !turnOnBeauty
                               ? () async {
                             if(Platform.isAndroid) {
-                              license = "";
                             }
                             else if(Platform.isIOS) {
                               license = "";
